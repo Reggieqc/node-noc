@@ -3,7 +3,7 @@ import { LogEntity, LogSeverityLevel } from "../../domain/entities/log.entity";
 import fs from "fs";
 
 export class FileSystemDataSource implements LogDataSource {
-  private readonly logPath = "/logs";
+  private readonly logPath = "./logs";
   private readonly allLogsPath = `${this.logPath}/logs-low.log`;
   private readonly mediumLogsPath = `${this.logPath}/logs-medium.log`;
   private readonly highLogsPath = `${this.logPath}/logs-high.log`;
@@ -15,8 +15,8 @@ export class FileSystemDataSource implements LogDataSource {
   private createLogFiles() {
     [this.allLogsPath, this.mediumLogsPath, this.highLogsPath].forEach(
       (path) => {
-        if (!fs.existsSync(path)) {
-          fs.writeFileSync(path, "");
+        if (!fs.existsSync(this.logPath)) {
+          fs.mkdirSync(this.logPath);
         }
       },
     );
