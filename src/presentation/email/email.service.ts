@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import { envs } from "../../config/plugins/envs.plugin";
+import { LogEntity, LogSeverityLevel } from "../../domain/entities/log.entity";
 interface SendEmailOptions {
   to: string | string[];
   subject: string;
@@ -11,6 +12,8 @@ interface Attachment {
   path: string;
 }
 export class EmailService {
+  constructor() {}
+
   private transporter = nodemailer.createTransport({
     service: envs.MAILER_SERVICE,
     auth: {
@@ -30,8 +33,18 @@ export class EmailService {
         attachments,
       });
       console.log(sentInformation);
+      const log = new LogEntity({
+        message: `Email sent successfully to ${to}`,
+        level: LogSeverityLevel.LOW,
+        origin: "email-service.ts",
+      });
       return true;
     } catch (error) {
+      const log = new LogEntity({
+        message: `Failed to send email to ${to}`,
+        level: LogSeverityLevel.HIGH,
+        origin: "email-service.ts",
+      });
       return false;
     }
   }
