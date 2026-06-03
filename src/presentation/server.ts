@@ -19,9 +19,9 @@ export class Server {
      *                                  *
      *                                  */
     //Use a use case instead to send email
-    new SendEmailLogs(emailService, fileSystemLogRepository).execute(
-      "regg.qc94@gmail.com",
-    );
+    // new SendEmailLogs(emailService, fileSystemLogRepository).execute(
+    //   "regg.qc94@gmail.com",
+    // );
     // emailService.sendEmail({
     //   to: "regg.qc94@gmail.com",
     //   subject: "Test email",
