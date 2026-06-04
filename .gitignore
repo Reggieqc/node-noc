@@ -1,14 +1,21 @@
-
-
-
 node_modules/
 dist/
 
 # Logs
 .DS_Store
-
+*.log
 logs/*
-.env
 
+# Environments
+.env
+.env.local
+.env.test
+
+# Databases / Prisma
 mongo/
 postgres/
+/src/generated/prisma
+
+# IDEs / Editors
+.vscode/
+.idea/
