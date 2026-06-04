@@ -1,0 +1,15 @@
+version: "4"
+
+services:
+  mongo-db:
+    # container setting
+    image: mongo:8.3
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    # volumes: external disc for data persistence
+    volumes:
+      - ./mongo:/data/db
+    ports:
+      - 27017:27017
