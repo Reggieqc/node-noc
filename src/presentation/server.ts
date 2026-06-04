@@ -1,5 +1,6 @@
 import { envs } from "../config/plugins/envs.plugin";
 import { CheckService } from "../domain/use-cases/checks/check-service";
+import { CheckServiceMultiple } from "../domain/use-cases/checks/check-service-multiple";
 import { SendEmailLogs } from "../domain/use-cases/email/send-email-logs";
 import { FileSystemDataSource } from "../infrastructure/datasources/file-system.datasource";
 import { MongoLogDataSource } from "../infrastructure/datasources/mongo-log.datasource";
@@ -8,12 +9,16 @@ import { LogRepositoryImpl } from "../infrastructure/repositories/log.repository
 import { CronService } from "./cron/cron-service";
 import { EmailService } from "./email/email.service";
 
-const logRepository = new LogRepositoryImpl(
-  // new FileSystemDataSource(),
-  // new MongoLogDataSource(),
+// const logRepository = new LogRepositoryImpl(
+//   // new FileSystemDataSource(),
+//   // new MongoLogDataSource(),
+//   new PostgresLogDataSource(envs),
+// );
+const fsLogRepository = new LogRepositoryImpl(new FileSystemDataSource());
+const mongoLogRepository = new LogRepositoryImpl(new MongoLogDataSource());
+const postgresLogRepository = new LogRepositoryImpl(
   new PostgresLogDataSource(envs),
 );
-
 const emailService = new EmailService();
 
 export class Server {
@@ -40,10 +45,19 @@ export class Server {
      *          CRON SERVICE            *
      *                                  *
      *                                  */
+    // CronService.createJob("*/5 * * * * *", () => {
+    //   const url = "https://google.com";
+    //   new CheckService(
+    //     logRepository,
+    //     () => console.log(`${url} is ok`),
+    //     (error) => console.log(error),
+    //   ).execute(url);
+    //   // new CheckService().execute( 'http://localhost:3000' );
+    // });
     CronService.createJob("*/5 * * * * *", () => {
       const url = "https://google.com";
-      new CheckService(
-        logRepository,
+      new CheckServiceMultiple(
+        [fsLogRepository, mongoLogRepository, postgresLogRepository],
         () => console.log(`${url} is ok`),
         (error) => console.log(error),
       ).execute(url);

@@ -1,19 +1,25 @@
 import { LogEntity, LogSeverityLevel } from "../../entities/log.entity";
 import { LogRepository } from "../../repository/log.respository";
 
-interface CheckServiceUseCase {
-  execute(url: string): Promise<boolean>;
+interface CheckServiceMultipleUseCase {
+  execute(urls: string): Promise<boolean>;
 }
 
 type SuccessCallback = () => void;
 type ErrorCallback = (error: string) => void;
 
-export class CheckService implements CheckServiceUseCase {
+export class CheckServiceMultiple implements CheckServiceMultipleUseCase {
   constructor(
-    private readonly logRepository: LogRepository, //Doesn't interact with the data source directly, it interacts with the repository, which is the one that interacts with the data source. This way we can change the data source without changing the use case.
+    private readonly logRepository: LogRepository[],
     private readonly successCallback: SuccessCallback,
     private readonly errorCallback: ErrorCallback,
   ) {}
+
+  private callLogs(log: LogEntity) {
+    this.logRepository.forEach((logRepository) => {
+      logRepository.saveLog(log);
+    });
+  }
 
   public async execute(url: string): Promise<boolean> {
     try {
@@ -26,7 +32,7 @@ export class CheckService implements CheckServiceUseCase {
         level: LogSeverityLevel.LOW,
         origin: "check-service.ts",
       });
-      this.logRepository.saveLog(log);
+      this.callLogs(log);
       this.successCallback();
       return true;
     } catch (error) {
@@ -35,7 +41,7 @@ export class CheckService implements CheckServiceUseCase {
         level: LogSeverityLevel.HIGH,
         origin: "check-service.ts",
       });
-      this.logRepository.saveLog(log);
+      this.callLogs(log);
       this.errorCallback(`${error}`);
       return false;
     }
