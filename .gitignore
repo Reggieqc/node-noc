@@ -12,10 +12,15 @@ logs/*
 .env.test
 
 # Databases / Prisma
-mongo/
-postgres/
+/mongo/
+/postgres/
+mongo-test/
+postgres-test/
 /src/generated/prisma
 
 # IDEs / Editors
 .vscode/
 .idea/
+
+# Testing
+/coverage

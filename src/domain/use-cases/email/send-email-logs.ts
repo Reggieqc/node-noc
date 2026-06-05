@@ -24,7 +24,6 @@ export class SendEmailLogs implements SendEmailLogsUseCase {
         origin: "send-email-logs.ts",
       });
       this.logRepository.saveLog(log);
-      return true;
     } catch (error) {
       const log = new LogEntity({
         message: `Failed to send email to ${to}`,
@@ -32,7 +31,7 @@ export class SendEmailLogs implements SendEmailLogsUseCase {
         origin: "send-email-logs.ts",
       });
       this.logRepository.saveLog(log);
-      return false;
     }
+    return sent;
   }
 }

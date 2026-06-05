@@ -4,18 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsnd --respawn src/app.ts",
+    "dev": "tsnd --respawn --clear src/app.ts",
     "build": "rimraf ./dist && tsc",
-    "start": "npm run build && node dist/app.js"
+    "start": "npm run build && node dist/app.js",
+    "docker:test": "docker compose -f docker-compose.test.yml --env-file .env.test up -d",
+    "test": "npm run docker:test && jest",
+    "test:watch": "npm run docker:test && jest --watch",
+    "test:coverage": "npm run docker:test && jest --coverage"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "@types/node": "^20.5.7",
     "@types/nodemailer": "^8.0.0",
+    "jest": "^30.4.2",
     "prisma": "^7.8.0",
     "rimraf": "^5.0.1",
+    "supertest": "^7.2.2",
+    "ts-jest": "^29.4.11",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
   },
