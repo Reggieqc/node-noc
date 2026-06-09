@@ -8,11 +8,11 @@ describe("envs.plugin.ts", () => {
       MAILER_EMAIL: "regg.qc94@gmail.com",
       MAILER_SECRET_KEY: "1231231",
       PROD: false,
-      MONGO_URL: "mongodb://Reggie:123456789@localhost:27017/",
+      MONGO_URL: "mongodb://reggie:123456789@localhost:27017/",
       MONGO_DB_NAME: "node-noc-test",
-      MONGO_USER: "Reggie",
+      MONGO_USER: "reggie",
       MONGO_PASSWORD: "123456789",
-      POSTGRES_URL: "postgresql://Reggie:123456789@localhost:5432/NOC",
+      POSTGRES_URL: "postgresql://postgres:123456789@localhost:5432/NOC_TEST",
     });
   });
 

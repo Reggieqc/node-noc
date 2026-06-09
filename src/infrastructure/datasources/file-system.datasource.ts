@@ -18,6 +18,14 @@ export class FileSystemDataSource implements LogDataSource {
         if (!fs.existsSync(this.logPath)) {
           fs.mkdirSync(this.logPath);
         }
+
+        [this.allLogsPath, this.mediumLogsPath, this.highLogsPath].forEach(
+          (path) => {
+            if (fs.existsSync(path)) return;
+
+            fs.writeFileSync(path, "");
+          },
+        );
       },
     );
   }
