@@ -36,4 +36,10 @@ export class PostgresLogDataSource implements LogDataSource {
 
     return dbLogs.map(LogEntity.fromObject);
   }
+
+  async cleanLogs(): Promise<void> {
+    if (this.envs.POSTGRES_URL.toLocaleLowerCase().includes("test")) {
+      await this.prisma.logModel.deleteMany();
+    }
+  }
 }

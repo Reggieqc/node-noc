@@ -51,7 +51,7 @@ describe("Log model", () => {
         origin: expect.objectContaining({ type: expect.any(Function) }),
         createdAt: expect.objectContaining({
           type: expect.any(Function),
-          default: expect.any(Date),
+          default: expect.any(Function),
         }),
       }),
     );

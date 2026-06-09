@@ -3,6 +3,8 @@
 import "dotenv/config";
 import { defineConfig, env } from "prisma/config";
 
+console.log("Connecting to:", env("POSTGRES_URL"));
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {

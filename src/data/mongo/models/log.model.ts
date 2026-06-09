@@ -1,11 +1,11 @@
-import moongoose from "mongoose";
+import mongoose from "mongoose";
 
 // level: LogSeverityLevel;
 // message: string;
 // origin: string;
 // createdAt?: Date;
 
-const logSchema = new moongoose.Schema({
+const logSchema = new mongoose.Schema({
   level: {
     type: String,
     enum: ["low", "medium", "high"],
@@ -21,8 +21,8 @@ const logSchema = new moongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: new Date(),
+    default: Date.now,
   },
 });
 
-export const LogModel = moongoose.model("Log", logSchema);
+export const LogModel = mongoose.model("Log", logSchema);

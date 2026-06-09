@@ -54,14 +54,14 @@ export class Server {
     //   ).execute(url);
     //   // new CheckService().execute( 'http://localhost:3000' );
     // });
-    CronService.createJob("*/5 * * * * *", () => {
-      const url = "https://google.com";
-      new CheckServiceMultiple(
-        [fsLogRepository, mongoLogRepository, postgresLogRepository],
-        () => console.log(`${url} is ok`),
-        (error) => console.log(error),
-      ).execute(url);
-      // new CheckService().execute( 'http://localhost:3000' );
-    });
+    // CronService.createJob("*/5 * * * * *", () => {
+    //   const url = "https://google.com";
+    //   new CheckServiceMultiple(
+    //     [fsLogRepository, mongoLogRepository, postgresLogRepository],
+    //     () => console.log(`${url} is ok`),
+    //     (error) => console.log(error),
+    //   ).execute(url);
+    //   // new CheckService().execute( 'http://localhost:3000' );
+    // });
   }
 }

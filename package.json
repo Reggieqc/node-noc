@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsnd --respawn --clear src/app.ts",
+    "dev": "tsnd --respawn src/app.ts",
     "build": "rimraf ./dist && tsc",
+    "prisma:test": "dotenv -e .env.test prisma db push",
     "start": "npm run build && node dist/app.js",
     "docker:test": "docker compose -f docker-compose.test.yml --env-file .env.test up -d",
     "test": "npm run docker:test && jest",
-    "test:watch": "npm run docker:test && jest --watch",
+    "test:watch": "npm run prisma:test && npm run docker:test && jest --watch",
     "test:coverage": "npm run docker:test && jest --coverage"
   },
   "keywords": [],
